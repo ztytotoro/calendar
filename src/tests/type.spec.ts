@@ -1,4 +1,4 @@
-import { isNumber, isNumbers } from './type';
+import { isNumber, isNumbers } from '../type';
 
 test('test isNumber', () => {
     expect(isNumber(2020)).toBeTruthy();
