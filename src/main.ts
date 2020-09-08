@@ -1,3 +1,1 @@
-export function test() {
-    return 123;
-}
+import { getMonthDays, getWeekDay } from './date';

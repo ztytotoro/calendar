@@ -1,19 +1,26 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
+        "target": "ESNext",
+        "module": "ESNext",
         "baseUrl": "./",
         "strict": true,
-        "lib": ["dom", "es2018"],
+        "lib": [
+            "dom",
+            "es2018"
+        ],
         "sourceMap": true,
         "outDir": "./lib",
         "rootDir": "./src",
         "moduleResolution": "node",
         "importHelpers": true,
         "declaration": true,
+        "declarationDir": "./lib",
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
-    "exclude": ["demo", "lib"]
+    "exclude": [
+        "demo",
+        "lib"
+    ]
 }

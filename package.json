@@ -4,11 +4,11 @@
   "description": "TypeScript template library",
   "main": "lib/main.common.js",
   "module": "lib/main.esm.js",
-  "typings": "lib/main.d.ts",
+  "types": "lib/main.d.ts",
   "scripts": {
     "test": "jest",
     "lint": "eslint --fix ./src --ext .ts,.tsx",
-    "build": "rollup -c"
+    "build": "node scripts/build.js && tsc --emitDeclarationOnly"
   },
   "gitHooks": {
     "pre-commit": "lint-staged",
@@ -40,10 +40,15 @@
   },
   "homepage": "https://github.com/ztytotoro/TsLibrary#readme",
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
     "@types/jest": "^26.0.13",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
+    "babel-jest": "^26.3.0",
     "chalk": "^4.1.0",
+    "esbuild": "^0.6.32",
     "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
@@ -51,18 +56,8 @@
     "jest": "^26.4.2",
     "lint-staged": "^10.3.0",
     "prettier": "^2.1.1",
-    "rollup": "^2.26.10",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-typescript2": "^0.27.2",
-    "ts-jest": "^26.3.0",
     "tslib": "^2.0.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.3.0",
     "typescript": "^4.0.2",
     "yorkie": "^2.0.0"
-  },
-  "jest": {
-    "testEnvironment": "node"
   }
 }
