@@ -5,10 +5,11 @@ import { isNumbers } from './type';
 
 export class CalendarDay {
     readonly date: Date;
-    events = new EventSets();
+    readonly events = new EventSets();
+    constructor();
     constructor(date: Date);
     constructor(year: number, month: number, day: number);
-    constructor(a: Date | number, b?: number, c?: number) {
+    constructor(a?: Date | number, b?: number, c?: number) {
         const list = [a, b, c];
         if (a instanceof Date) {
             this.date = a;
@@ -68,4 +69,8 @@ export function addEvent(date: CalendarDay, event: CalendarEvent) {
     }
 
     date.events.add(event);
+}
+
+export function addEvents(date: CalendarDay, events: CalendarEvent[]) {
+    events.forEach((event) => addEvent(date, event));
 }

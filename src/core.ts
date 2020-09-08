@@ -13,6 +13,8 @@ export enum TimeUnits {
     Second = 'Second',
 }
 
+export type CalendarViewTypes = TimeUnits.Week | TimeUnits.Month;
+
 export interface CalendarMonth {
     year: number;
     month: number;
