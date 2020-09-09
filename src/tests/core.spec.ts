@@ -25,6 +25,12 @@ describe(Class`TimeSpan`, () => {
         expect(span1.getMonths()).toBe(0);
         expect(span2.getMonths()).toBe(1);
     });
+    test(Member`getWorkDays`, () => {
+        expect(span1.getWorkDays()).toBe(6);
+    });
+    test(Member`getWeekendDays`, () => {
+        expect(span1.getWeekendDays()).toBe(2);
+    });
     test(Member`diff`, () => {
         expect(span1.diff()).toEqual({
             year: 0,

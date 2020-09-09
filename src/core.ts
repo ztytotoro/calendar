@@ -1,4 +1,4 @@
-import { daysOf, weeksOf, isEqual, toPositiveInt } from './helpers';
+import { daysOf, weeksOf, isEqual, toPositiveInt, getWeekDay } from './helpers';
 
 export enum TimeUnits {
     Year = 'Year',
@@ -65,9 +65,45 @@ export class TimeSpan {
         return daysOf(this.span);
     }
 
-    getWorkDays() {}
+    getWorkDays() {
+        let days = this.getFullWeeks() * 5;
+        if (getWeekDay(this.start) === 0 || getWeekDay(this.start) === 6) {
+            days -= 5;
+        } else {
+            days -= getWeekDay(this.start);
+        }
+        if (getWeekDay(this.end) >= 1 && getWeekDay(this.end) <= 5) {
+            days -= 5 - getWeekDay(this.end);
+        }
+        return days;
+    }
 
-    getWeekendDays() {}
+    getWeekendDays() {
+        let days = this.getFullWeeks() * 2;
+        if (getWeekDay(this.start) === 0) {
+            days--;
+        }
+        if (getWeekDay(this.start) === 6) {
+            days -= 2;
+        }
+        if (getWeekDay(this.end) === 6) {
+            days--;
+        } else if (getWeekDay(this.end) > 0) {
+            days -= 2;
+        }
+        return days;
+    }
+
+    getFullWeeks() {
+        let days = this.getDays();
+        if (getWeekDay(this.start) > 1) {
+            days += getWeekDay(this.start);
+        }
+        if (getWeekDay(this.end) !== 0) {
+            days += 7 - getWeekDay(this.end);
+        }
+        return Math.round(days / 7);
+    }
 
     getWeeks() {
         return weeksOf(this.span);
