@@ -1,5 +1,5 @@
 import { isNumbers, isNumber } from './type';
-import { TimeUnits, CalendarDuration } from './core';
+import { TimeUnits, CalendarDuration, TimeSpan } from './core';
 
 export function isWorkDay(date: Date) {
     const day = date.getDay();
@@ -89,4 +89,49 @@ export function range(a: number, b?: number) {
 
 function getSign(a: number, b: number) {
     return (b - a) / Math.abs(b - a);
+}
+
+export function daysOf(ms: number) {
+    return Math.floor(ms / 1000 / 3600 / 24);
+}
+
+export function weeksOf(ms: number) {
+    return Math.floor(ms / 1000 / 3600 / 24 / 7);
+}
+
+export function toPositiveInt(value: number) {
+    if (value < 1) {
+        value = 1;
+    }
+    return Math.round(value);
+}
+
+export function isEqual(a: number, b: number) {
+    return (b - a) * Math.pow(10, 6) < 1;
+}
+
+export function isRepeated(
+    timeSpan: TimeSpan,
+    type: TimeUnits.Year | TimeUnits.Month | TimeUnits.Week | TimeUnits.Day,
+    times: number
+) {
+    const diff = timeSpan.diff();
+    const isValid = (a: number, b: number) => {
+        if (b === -1) return true;
+        return isEqual(a / b, b);
+    };
+    switch (type) {
+        case TimeUnits.Year:
+            return (
+                diff.day === 0 && diff.month === 0 && isValid(diff.year, times)
+            );
+        case TimeUnits.Month:
+            return diff.day === 0 && isValid(timeSpan.getMonths(), times);
+        case TimeUnits.Week:
+            return diff.weekDay === 0 && isValid(timeSpan.getWeeks(), times);
+        case TimeUnits.Day:
+            return isValid(timeSpan.getDays(), times);
+        default:
+            return false;
+    }
 }

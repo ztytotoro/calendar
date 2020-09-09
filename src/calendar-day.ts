@@ -1,6 +1,6 @@
 import { CalendarEvent, isEventMatch, EventSets } from './event';
 import { isWorkDay, isWeekend, addTimeDuration, isDefined } from './helpers';
-import { CalendarRepeat } from './core';
+import { CalendarRepeatTypes } from './core';
 import { isNumbers } from './type';
 
 export class CalendarDay {
@@ -55,14 +55,14 @@ export function addEvent(date: CalendarDay, event: CalendarEvent) {
         }
     }
     if (
-        !isDefined<CalendarRepeat>(event.repeat) &&
+        !isDefined<CalendarRepeatTypes>(event.repeat) &&
         event.start.toDateString() !== date.date.toDateString()
     ) {
         return;
     }
 
     if (
-        isDefined<CalendarRepeat>(event.repeat) &&
+        isDefined<CalendarRepeatTypes>(event.repeat) &&
         !isEventMatch(date.date, event.start, event.repeat)
     ) {
         return;

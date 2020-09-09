@@ -1,8 +1,10 @@
 import {
-    CalendarRepeat,
+    CalendarRepeatTypes,
     TimeUnits,
     CalendarDuration,
-    DurationType,
+    DurationTypes,
+    CalendarRepeat,
+    TimeSpan,
 } from './core';
 import {
     isWorkDay,
@@ -10,7 +12,12 @@ import {
     getWeekDay,
     getMonthDay,
     getMonth,
+    isDefined,
+    toPositiveInt,
+    isEqual,
+    isRepeated,
 } from './helpers';
+import { isNumber } from './type';
 
 export class CalendarEvent {
     #id = Symbol();
@@ -62,14 +69,39 @@ export class CalendarEvent {
         return this;
     }
 
-    repeateEvery(duration: CalendarRepeat) {
-        this.#repeat = duration;
+    repeatEvery(
+        count: number,
+        duration: CalendarRepeatTypes,
+        times?: number
+    ): this;
+    repeatEvery(duration: CalendarRepeatTypes, times?: number): this;
+    repeatEvery(
+        a: number | CalendarRepeatTypes,
+        b?: CalendarRepeatTypes | number,
+        c?: number
+    ) {
+        if (isNumber(a) && isDefined<CalendarRepeatTypes>(b)) {
+            this.#repeat = {
+                value: toPositiveInt(a),
+                type: b,
+                times: isNumber(c) ? c : -1,
+            };
+        } else if (isDefined<CalendarRepeatTypes>(a)) {
+            this.#repeat = {
+                value: 1,
+                type: a,
+                times: isNumber(c) ? c : -1,
+            };
+        } else {
+            throw new Error('Unsupported arguments');
+        }
+
         return this;
     }
 
-    last(value: number, type: DurationType) {
+    last(value: number, type: DurationTypes) {
         this.#duration = {
-            value,
+            value: toPositiveInt(value),
             type,
         };
         return this;
@@ -90,28 +122,30 @@ export function isEventMatch(
     eventStart: Date,
     repeat: CalendarRepeat
 ) {
-    if (repeat === TimeUnits.Day) {
-        return true;
+    const span = new TimeSpan(eventStart, date, true);
+    switch (repeat.type) {
+        case TimeUnits.Day: {
+            if (repeat.times === -1) {
+                return span.getDays() % repeat.value === 0;
+            } else {
+                return isEqual(span.getDays() / repeat.value, repeat.times);
+            }
+        }
+        case TimeUnits.WorkDay:
+            return (
+                isWorkDay(date) && isRepeated(span, TimeUnits.Day, repeat.times)
+            );
+        case TimeUnits.Weekend:
+            return (
+                isWeekend(date) && isRepeated(span, TimeUnits.Day, repeat.times)
+            );
+        case TimeUnits.Week:
+        case TimeUnits.Month:
+        case TimeUnits.Year:
+            return isRepeated(span, repeat.type, repeat.times);
+        default:
+            return false;
     }
-    if (repeat === TimeUnits.WorkDay) {
-        return isWorkDay(date);
-    }
-    if (repeat === TimeUnits.Weekend) {
-        return isWeekend(date);
-    }
-    if (repeat === TimeUnits.Week) {
-        return getWeekDay(date) === getWeekDay(eventStart);
-    }
-    if (repeat === TimeUnits.Month) {
-        return getMonthDay(date) === getMonthDay(eventStart);
-    }
-    if (repeat === TimeUnits.Year) {
-        return (
-            getMonth(date) === getMonth(eventStart) &&
-            getMonthDay(date) === getMonthDay(eventStart)
-        );
-    }
-    return false;
 }
 
 export function createEvent(start: Date) {
@@ -131,3 +165,12 @@ export class EventSets {
         return Array.from(this.#eventMap.values());
     }
 }
+
+type EventOption = (
+    | Pick<CalendarEvent, 'start'>
+    | Pick<CalendarEvent, 'start' | 'end'>
+    | Pick<CalendarEvent, 'start' | 'duration'>
+) &
+    Partial<Pick<CalendarEvent, 'title' | 'description'>>;
+
+export function createEvents(options: EventOption[]) {}
