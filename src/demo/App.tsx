@@ -1,8 +1,13 @@
-import Vue, { FunctionalComponent } from 'vue';
+import { FunctionalComponent } from 'vue';
+import logo from './assets/logo.png';
 
-export const App: FunctionalComponent = () => (
-    <div>
-        <img alt="Vue logo" src="./assets/logo.png" />
-        <h1 msg="Hello Vue 3.0 + Vite"></h1>
-    </div>
-);
+const App: FunctionalComponent = () => {
+    return (
+        <div>
+            <img alt="Vue logo" src={logo} />
+            <h1>Hello Vue 3.0 + Vite</h1>
+        </div>
+    );
+};
+
+export default App;
