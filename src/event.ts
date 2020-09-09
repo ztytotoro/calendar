@@ -16,7 +16,17 @@ import {
 } from './helpers';
 import { isNumber } from './type';
 
-export class CalendarEvent {
+export interface ICalendarEvent {
+    id: Symbol;
+    start: Date;
+    end?: Date;
+    duration?: CalendarDuration;
+    repeat?: CalendarRepeat;
+    title?: string;
+    description?: string;
+}
+
+export class CalendarEvent implements ICalendarEvent {
     #id = Symbol();
     #start: Date;
     #end?: Date;
@@ -67,7 +77,7 @@ export class CalendarEvent {
     }
 
     repeatEvery(
-        count: number,
+        interval: number,
         duration: CalendarRepeatTypes,
         times?: number
     ): this;
@@ -168,11 +178,30 @@ export class EventSets {
     }
 }
 
-type EventOption = (
-    | Pick<CalendarEvent, 'start'>
-    | Pick<CalendarEvent, 'start' | 'end'>
-    | Pick<CalendarEvent, 'start' | 'duration'>
-) &
-    Partial<Pick<CalendarEvent, 'title' | 'description'>>;
+type EventOption = Omit<ICalendarEvent, 'id'>;
 
-export function createEvents() {}
+export function createEvents(options: EventOption[]) {
+    return options.map((option) => {
+        const event = createEvent(option.start);
+        if (option.end) {
+            event.endWhen(option.end);
+        }
+        if (option.duration) {
+            event.last(option.duration.count, option.duration.type);
+        }
+        if (option.repeat) {
+            event.repeatEvery(
+                option.repeat.interval,
+                option.repeat.type,
+                option.repeat.times
+            );
+        }
+        if (option.title) {
+            event.setTitle(option.title);
+        }
+        if (option.description) {
+            event.setDescription(option.description);
+        }
+        return event;
+    });
+}

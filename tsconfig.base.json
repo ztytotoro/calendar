@@ -4,10 +4,7 @@
         "module": "ESNext",
         "baseUrl": "./",
         "strict": true,
-        "lib": [
-            "dom",
-            "es2018"
-        ],
+        "lib": ["dom", "es2018"],
         "sourceMap": true,
         "outDir": "./lib",
         "rootDir": "./src",
@@ -17,10 +14,10 @@
         "declarationDir": "./lib",
         "esModuleInterop": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "jsx": "preserve",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "h"
     },
-    "exclude": [
-        "demo",
-        "lib"
-    ]
+    "exclude": ["demo", "lib"]
 }
