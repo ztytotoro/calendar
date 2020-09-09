@@ -5,17 +5,14 @@ import {
     DurationTypes,
     CalendarRepeat,
     TimeSpan,
+    isRepeated,
 } from './core';
 import {
     isWorkDay,
     isWeekend,
-    getWeekDay,
-    getMonthDay,
-    getMonth,
     isDefined,
     toPositiveInt,
     isEqual,
-    isRepeated,
 } from './helpers';
 import { isNumber } from './type';
 
@@ -82,13 +79,13 @@ export class CalendarEvent {
     ) {
         if (isNumber(a) && isDefined<CalendarRepeatTypes>(b)) {
             this.#repeat = {
-                value: toPositiveInt(a),
+                interval: toPositiveInt(a),
                 type: b,
                 times: isNumber(c) ? c : -1,
             };
         } else if (isDefined<CalendarRepeatTypes>(a)) {
             this.#repeat = {
-                value: 1,
+                interval: 1,
                 type: a,
                 times: isNumber(c) ? c : -1,
             };
@@ -101,7 +98,7 @@ export class CalendarEvent {
 
     last(value: number, type: DurationTypes) {
         this.#duration = {
-            value: toPositiveInt(value),
+            count: toPositiveInt(value),
             type,
         };
         return this;
@@ -122,27 +119,32 @@ export function isEventMatch(
     eventStart: Date,
     repeat: CalendarRepeat
 ) {
+    if (date < eventStart) {
+        return false;
+    }
     const span = new TimeSpan(eventStart, date, true);
     switch (repeat.type) {
         case TimeUnits.Day: {
             if (repeat.times === -1) {
-                return span.getDays() % repeat.value === 0;
+                return span.getDays() % repeat.interval === 0;
             } else {
-                return isEqual(span.getDays() / repeat.value, repeat.times);
+                return isEqual(span.getDays() / repeat.interval, repeat.times);
             }
         }
         case TimeUnits.WorkDay:
             return (
-                isWorkDay(date) && isRepeated(span, TimeUnits.Day, repeat.times)
+                isWorkDay(date) &&
+                isRepeated(span, TimeUnits.Day, repeat.times, repeat.interval)
             );
         case TimeUnits.Weekend:
             return (
-                isWeekend(date) && isRepeated(span, TimeUnits.Day, repeat.times)
+                isWeekend(date) &&
+                isRepeated(span, TimeUnits.Day, repeat.times, repeat.interval)
             );
         case TimeUnits.Week:
         case TimeUnits.Month:
         case TimeUnits.Year:
-            return isRepeated(span, repeat.type, repeat.times);
+            return isRepeated(span, repeat.type, repeat.times, repeat.interval);
         default:
             return false;
     }
@@ -173,4 +175,4 @@ type EventOption = (
 ) &
     Partial<Pick<CalendarEvent, 'title' | 'description'>>;
 
-export function createEvents(options: EventOption[]) {}
+export function createEvents() {}

@@ -1,17 +1,17 @@
 import { Calendar } from '../calendar';
-import { CalendarEvent, createEvent } from '../event';
+import { createEvent } from '../event';
 import { TimeUnits } from '../core';
 
 test('Calendar', () => {
     const calendar = new Calendar();
     calendar.addEvent(
         createEvent(new Date('2020-9-1'))
-            .repeateEvery(TimeUnits.Week)
+            .repeatEvery(TimeUnits.Week)
             .setTitle('Task1')
     );
     calendar.addEvent(
         createEvent(new Date('2020-9-5'))
-            .repeateEvery(TimeUnits.WorkDay)
+            .repeatEvery(TimeUnits.WorkDay)
             .setTitle('Task2')
     );
     console.log(

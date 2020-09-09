@@ -1,5 +1,4 @@
-import { isWorkDay, isWeekend, daysOf, weeksOf } from './helpers';
-import { CalendarEvent } from './event';
+import { daysOf, weeksOf, isEqual, toPositiveInt } from './helpers';
 
 export enum TimeUnits {
     Year = 'Year',
@@ -28,7 +27,7 @@ export type DurationTypes = Exclude<
 
 export interface CalendarDuration {
     type: DurationTypes;
-    value: number;
+    count: number;
 }
 
 export type CalendarRepeatTypes = Exclude<
@@ -38,7 +37,7 @@ export type CalendarRepeatTypes = Exclude<
 
 export interface CalendarRepeat {
     type: CalendarRepeatTypes;
-    value: number;
+    interval: number;
     times: number;
 }
 
@@ -66,13 +65,17 @@ export class TimeSpan {
         return daysOf(this.span);
     }
 
+    getWorkDays() {}
+
+    getWeekendDays() {}
+
     getWeeks() {
         return weeksOf(this.span);
     }
 
     getMonths() {
-        const { year, month } = this.diff();
-        return Math.abs(year * 12 + month);
+        const { year, month, day } = this.diff();
+        return Math.abs(year * 12 + month) + (day < 0 ? -1 : 0);
     }
 
     get span() {
@@ -80,11 +83,63 @@ export class TimeSpan {
     }
 
     diff() {
+        const endWithSunday = (value: number) => (value === 0 ? 7 : value);
         return {
             year: this.end.getFullYear() - this.start.getFullYear(),
             month: this.end.getMonth() - this.start.getMonth(),
-            weekDay: this.end.getDay() - this.start.getDay(),
+            weekDay:
+                endWithSunday(this.end.getDay()) -
+                endWithSunday(this.start.getDay()),
             day: this.end.getDate() - this.start.getDate(),
         };
     }
+}
+
+export function isRepeated(
+    timeSpan: TimeSpan,
+    type: TimeUnits.Year | TimeUnits.Month | TimeUnits.Week | TimeUnits.Day,
+    times: number,
+    interval: number = 1
+) {
+    const diff = timeSpan.diff();
+    const isValid = (v: number, i: number, t: number) => {
+        if (t === -1) return v % i === 0;
+        return v <= t * i;
+    };
+    switch (type) {
+        case TimeUnits.Year:
+            return (
+                diff.day === 0 &&
+                diff.month === 0 &&
+                isValid(diff.year, interval, times)
+            );
+        case TimeUnits.Month:
+            return (
+                diff.day === 0 && isValid(timeSpan.getMonths(), interval, times)
+            );
+        case TimeUnits.Week:
+            return (
+                diff.weekDay === 0 &&
+                isValid(timeSpan.getWeeks(), interval, times)
+            );
+        case TimeUnits.Day:
+            return isValid(timeSpan.getDays(), interval, times);
+        default:
+            return false;
+    }
+}
+
+export function repeat(
+    type: CalendarRepeatTypes,
+    times: number = -1,
+    interval: number = 1
+): CalendarRepeat {
+    if (times < 0 && times !== -1) {
+        times = -1;
+    }
+    return {
+        type,
+        times: times,
+        interval: toPositiveInt(interval),
+    };
 }

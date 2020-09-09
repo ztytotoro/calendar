@@ -1,5 +1,5 @@
 import { isNumbers, isNumber } from './type';
-import { TimeUnits, CalendarDuration, TimeSpan } from './core';
+import { TimeUnits, CalendarDuration } from './core';
 
 export function isWorkDay(date: Date) {
     const day = date.getDay();
@@ -8,7 +8,7 @@ export function isWorkDay(date: Date) {
 
 export function isWeekend(date: Date) {
     const day = date.getDay();
-    return day >= 6 && day <= 7;
+    return day === 6 || day === 0;
 }
 
 export function isDefined<T>(val: unknown): val is T {
@@ -40,35 +40,6 @@ export function getMonth(date: Date) {
     return date.getMonth() + 1;
 }
 
-export function addTimeDuration(time: Date, duration: CalendarDuration) {
-    const newTime = new Date(time);
-    switch (duration.type) {
-        case TimeUnits.Year:
-            newTime.setFullYear(newTime.getFullYear() + duration.value);
-            break;
-        case TimeUnits.Month:
-            newTime.setMonth(newTime.getMonth() + duration.value);
-            break;
-        case TimeUnits.Week:
-            newTime.setDate(newTime.getDate() + 7 * duration.value);
-            break;
-        case TimeUnits.Day:
-            newTime.setDate(newTime.getDate() + duration.value);
-            break;
-        case TimeUnits.Hour:
-            newTime.setHours(newTime.getHours() + duration.value);
-            break;
-        case TimeUnits.Minute:
-            newTime.setMinutes(newTime.getMinutes() + duration.value);
-            break;
-        case TimeUnits.Second:
-            newTime.setSeconds(newTime.getSeconds() + duration.value);
-            break;
-    }
-
-    return newTime;
-}
-
 export function lastOf<T>(list: T[]) {
     return list[list.length - 1];
 }
@@ -79,7 +50,7 @@ export function range(a: number, b?: number) {
     if (isNumber(a) && isNumber(b)) {
         return Array(Math.abs(b - a) + 1)
             .fill(0)
-            .map((_, i) => a + i * getSign(a, b));
+            .map((_, i) => a + i * increaseSign(a, b));
     } else {
         return Array(a)
             .fill(0)
@@ -87,7 +58,10 @@ export function range(a: number, b?: number) {
     }
 }
 
-function getSign(a: number, b: number) {
+export function increaseSign(a: number, b: number) {
+    if (a === b) {
+        return 0;
+    }
     return (b - a) / Math.abs(b - a);
 }
 
@@ -106,32 +80,37 @@ export function toPositiveInt(value: number) {
     return Math.round(value);
 }
 
+const PRECISION = Math.pow(10, -15);
+
 export function isEqual(a: number, b: number) {
-    return (b - a) * Math.pow(10, 6) < 1;
+    return Math.abs(b - a) < PRECISION;
 }
 
-export function isRepeated(
-    timeSpan: TimeSpan,
-    type: TimeUnits.Year | TimeUnits.Month | TimeUnits.Week | TimeUnits.Day,
-    times: number
-) {
-    const diff = timeSpan.diff();
-    const isValid = (a: number, b: number) => {
-        if (b === -1) return true;
-        return isEqual(a / b, b);
-    };
-    switch (type) {
+export function addTimeDuration(time: Date, duration: CalendarDuration) {
+    const newTime = new Date(time);
+    switch (duration.type) {
         case TimeUnits.Year:
-            return (
-                diff.day === 0 && diff.month === 0 && isValid(diff.year, times)
-            );
+            newTime.setFullYear(newTime.getFullYear() + duration.count);
+            break;
         case TimeUnits.Month:
-            return diff.day === 0 && isValid(timeSpan.getMonths(), times);
+            newTime.setMonth(newTime.getMonth() + duration.count);
+            break;
         case TimeUnits.Week:
-            return diff.weekDay === 0 && isValid(timeSpan.getWeeks(), times);
+            newTime.setDate(newTime.getDate() + 7 * duration.count);
+            break;
         case TimeUnits.Day:
-            return isValid(timeSpan.getDays(), times);
-        default:
-            return false;
+            newTime.setDate(newTime.getDate() + duration.count);
+            break;
+        case TimeUnits.Hour:
+            newTime.setHours(newTime.getHours() + duration.count);
+            break;
+        case TimeUnits.Minute:
+            newTime.setMinutes(newTime.getMinutes() + duration.count);
+            break;
+        case TimeUnits.Second:
+            newTime.setSeconds(newTime.getSeconds() + duration.count);
+            break;
     }
+
+    return newTime;
 }
