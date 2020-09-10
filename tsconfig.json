@@ -1,7 +1,10 @@
 {
     "extends": "./tsconfig.base.json",
-    "compilerOptions": {
-        "jsx": "react"
-    },
-    "exclude": ["**/*.spec.ts", "**/*.spec.tsx", "node_modules", "lib"]
+    "compilerOptions": {},
+    "exclude": [
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "node_modules",
+        "lib"
+    ]
 }

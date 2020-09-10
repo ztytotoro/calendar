@@ -133,7 +133,13 @@ export class TimeSpan {
 
 export function isRepeated(
     timeSpan: TimeSpan,
-    type: TimeUnits.Year | TimeUnits.Month | TimeUnits.Week | TimeUnits.Day,
+    type:
+        | TimeUnits.Year
+        | TimeUnits.Month
+        | TimeUnits.Week
+        | TimeUnits.WorkDay
+        | TimeUnits.Weekend
+        | TimeUnits.Day,
     times: number,
     interval: number = 1
 ) {
@@ -158,6 +164,10 @@ export function isRepeated(
                 diff.weekDay === 0 &&
                 isValid(timeSpan.getWeeks(), interval, times)
             );
+        case TimeUnits.WorkDay:
+            return isValid(timeSpan.getWorkDays(), interval, times);
+        case TimeUnits.Weekend:
+            return isValid(timeSpan.getWeekendDays(), interval, times);
         case TimeUnits.Day:
             return isValid(timeSpan.getDays(), interval, times);
         default:

@@ -2,38 +2,43 @@ import { CalendarDay } from './calendar-day';
 import { getMonthDays, lastOf } from './helpers';
 
 export class CalendarMonth {
-    #year: number;
-    #month: number;
-    #days: CalendarDay[] = [];
+    private _year: number;
+    private _month: number;
+    private _days: CalendarDay[] = [];
 
     constructor(year: number, month: number) {
-        this.#year = year;
-        this.#month = month;
+        this._year = year;
+        this._month = month;
         this.genDays();
     }
 
     get days() {
-        return [...this.#days];
+        return [...this._days];
     }
 
     get year() {
-        return this.#year;
+        return this._year;
     }
 
     set year(val: number) {
-        if (val !== this.#year) {
-            this.#year = val;
+        if (val !== this._year) {
+            this._year = val;
             this.genDays();
         }
     }
 
     get month() {
-        return this.#month;
+        return this._month;
     }
 
     set month(val: number) {
-        if (val !== this.#month) {
-            this.#month = val;
+        if (val !== this._month) {
+            this._month = val;
+            if (this._month < 1) {
+                this._month = 12;
+                this.year--;
+                return;
+            }
             this.genDays();
         }
     }
@@ -63,6 +68,6 @@ export class CalendarMonth {
             );
         }
 
-        this.#days = days;
+        this._days = days;
     }
 }

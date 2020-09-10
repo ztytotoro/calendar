@@ -27,52 +27,52 @@ export interface ICalendarEvent {
 }
 
 export class CalendarEvent implements ICalendarEvent {
-    #id = Symbol();
-    #start: Date;
-    #end?: Date;
-    #duration?: CalendarDuration;
-    #repeat?: CalendarRepeat;
-    #title?: string;
-    #description?: string;
+    private _id = Symbol();
+    private _start: Date;
+    private _end?: Date;
+    private _duration?: CalendarDuration;
+    private _repeat?: CalendarRepeat;
+    private _title?: string;
+    private _description?: string;
 
     get id() {
-        return this.#id;
+        return this._id;
     }
 
     get start() {
-        return this.#start;
+        return this._start;
     }
 
     get end() {
-        return this.#end;
+        return this._end;
     }
 
     get duration() {
-        return this.#duration;
+        return this._duration;
     }
 
     get repeat() {
-        return this.#repeat;
+        return this._repeat;
     }
 
     get title() {
-        return this.#title;
+        return this._title;
     }
 
     get description() {
-        return this.#description;
+        return this._description;
     }
 
     constructor(start: Date) {
-        this.#start = start;
+        this._start = start;
     }
 
     startWhen(date: Date) {
-        this.#start = date;
+        this._start = date;
     }
 
     endWhen(date: Date) {
-        this.#end = date;
+        this._end = date;
         return this;
     }
 
@@ -88,13 +88,13 @@ export class CalendarEvent implements ICalendarEvent {
         c?: number
     ) {
         if (isNumber(a) && isDefined<CalendarRepeatTypes>(b)) {
-            this.#repeat = {
+            this._repeat = {
                 interval: toPositiveInt(a),
                 type: b,
                 times: isNumber(c) ? c : -1,
             };
         } else if (isDefined<CalendarRepeatTypes>(a)) {
-            this.#repeat = {
+            this._repeat = {
                 interval: 1,
                 type: a,
                 times: isNumber(c) ? c : -1,
@@ -107,7 +107,7 @@ export class CalendarEvent implements ICalendarEvent {
     }
 
     last(value: number, type: DurationTypes) {
-        this.#duration = {
+        this._duration = {
             count: toPositiveInt(value),
             type,
         };
@@ -115,12 +115,12 @@ export class CalendarEvent implements ICalendarEvent {
     }
 
     setTitle(text: string) {
-        this.#title = text;
+        this._title = text;
         return this;
     }
 
     setDescription(text: string) {
-        this.#description = text;
+        this._description = text;
     }
 }
 
@@ -144,12 +144,22 @@ export function isEventMatch(
         case TimeUnits.WorkDay:
             return (
                 isWorkDay(date) &&
-                isRepeated(span, TimeUnits.Day, repeat.times, repeat.interval)
+                isRepeated(
+                    span,
+                    TimeUnits.WorkDay,
+                    repeat.times,
+                    repeat.interval
+                )
             );
         case TimeUnits.Weekend:
             return (
                 isWeekend(date) &&
-                isRepeated(span, TimeUnits.Day, repeat.times, repeat.interval)
+                isRepeated(
+                    span,
+                    TimeUnits.Weekend,
+                    repeat.times,
+                    repeat.interval
+                )
             );
         case TimeUnits.Week:
         case TimeUnits.Month:
@@ -165,16 +175,16 @@ export function createEvent(start: Date) {
 }
 
 export class EventSets {
-    #eventMap = new Map<Symbol, CalendarEvent>();
+    _eventMap = new Map<Symbol, CalendarEvent>();
 
     add(event: CalendarEvent) {
-        if (!this.#eventMap.has(event.id)) {
-            this.#eventMap.set(event.id, event);
+        if (!this._eventMap.has(event.id)) {
+            this._eventMap.set(event.id, event);
         }
     }
 
     get events() {
-        return Array.from(this.#eventMap.values());
+        return Array.from(this._eventMap.values());
     }
 }
 

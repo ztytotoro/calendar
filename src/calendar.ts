@@ -9,7 +9,7 @@ export class Calendar {
     readonly monthView = new CalendarMonth(this.today.year, this.today.month);
     viewType: CalendarViewTypes = TimeUnits.Month;
 
-    get view() {
+    get view(): CalendarDay[] {
         const days = this.monthView.days;
         days.forEach((day) => addEvents(day, this.events.events));
         return days;
