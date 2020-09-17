@@ -48,6 +48,13 @@
       0 1.2px 3.6px 0 rgba(0, 0, 0, 0.108);
   }
 
+  .calendar-header {
+    box-shadow: 0 0 0 1px rgb(236, 236, 236);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
   .calendar-date {
     box-shadow: 0 0 0 1px rgb(236, 236, 236);
     display: flex;
@@ -115,6 +122,27 @@
   </div>
 
   <div class="calendar" style="--calendar-date-width:{calendarDateWidth}">
+    <div class="calendar-header">
+      <p class="calendar-date-text">星期一</p>
+    </div>
+    <div class="calendar-header">
+      <p class="calendar-date-text">星期二</p>
+    </div>
+    <div class="calendar-header">
+      <p class="calendar-date-text">星期三</p>
+    </div>
+    <div class="calendar-header">
+      <p class="calendar-date-text">星期四</p>
+    </div>
+    <div class="calendar-header">
+      <p class="calendar-date-text">星期五</p>
+    </div>
+    <div class="calendar-header">
+      <p class="calendar-date-text">星期六</p>
+    </div>
+    <div class="calendar-header">
+      <p class="calendar-date-text">星期日</p>
+    </div>
     {#each view as v}
       <div
         class="calendar-date"
@@ -125,6 +153,7 @@
             &nbsp;📅
           {/if}
         </p>
+
         {#each v.events as e}
           <div class="calendar-event">
             <span>{pad(e.start.hour, 2, '0')}:{pad(e.start.minute, 2, '0')}:{pad(e.start.second, 2, '0')}</span>
