@@ -1,5 +1,5 @@
 {
-  "name": "tslibrary",
+  "name": "calendar-core",
   "version": "0.0.0",
   "description": "TypeScript template library",
   "main": "lib/index.common.js",

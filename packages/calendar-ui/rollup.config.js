@@ -34,11 +34,11 @@ function serve() {
 }
 
 export default {
-  input: 'src/main.ts',
+  input: 'src/index.ts',
   output: {
     sourcemap: true,
     format: 'esm',
-    file: 'lib/index.js',
+    dir: 'lib',
   },
   plugins: [
     svelte({
@@ -64,6 +64,9 @@ export default {
     }),
     commonjs(),
     typescript({
+      declaration: true,
+      declarationDir: 'lib/types/',
+      rootDir: 'src/',
       // sourceMap: !production,
       // inlineSources: !production,
     }),
