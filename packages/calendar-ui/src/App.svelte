@@ -118,7 +118,7 @@
     {#each view as v}
       <div
         class="calendar-date"
-        class:grey={v.date.getMonth() !== now.getMonth()}
+        class:grey={v.date.getMonth() + 1 !== month}
         class:today={v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}>
         <p class="calendar-date-text">
           {v.day}&nbsp;日{#if v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}
