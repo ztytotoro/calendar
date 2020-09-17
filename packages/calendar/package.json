@@ -1,0 +1,69 @@
+{
+  "name": "tslibrary",
+  "version": "0.0.0",
+  "description": "TypeScript template library",
+  "main": "lib/index.common.js",
+  "module": "lib/index.esm.js",
+  "typings": "lib/core/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint --fix ./src --ext .ts,.tsx",
+    "build": "rollup -c"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node scripts/verifyCommit.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "git add"
+    ]
+  },
+  "files": [
+    "src/*.ts",
+    "lib/*.js",
+    "lib/*.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ztytotoro/TsLibrary.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ztytotoro/TsLibrary/issues"
+  },
+  "homepage": "https://github.com/ztytotoro/TsLibrary#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "babel-jest": "^26.3.0",
+    "chalk": "^4.1.0",
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.4.2",
+    "lint-staged": "^10.4.0",
+    "prettier": "^2.1.2",
+    "rollup": "^2.26.10",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.27.2",
+    "ts-transform-paths": "^2.0.1",
+    "tslib": "^2.0.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.3.0",
+    "typescript": "^4.0.2",
+    "yorkie": "^2.0.0"
+  }
+}

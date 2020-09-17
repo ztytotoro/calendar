@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "ESNext"
+    ],
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "h",
+    "declaration": false,
+    "declarationMap": false,
+    "composite": false,
+    "types": [
+      "webpack-env"
+    ],
+    "baseUrl": "."
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "jsx": "react",
+        "paths": {
+            "date-tools": [
+                "./src/date-tools"
+            ],
+            "event": [
+                "./src/event"
+            ],
+            "core": [
+                "./src/core"
+            ]
+        }
+    },
+    "exclude": [
+        "**/__tests__/*",
+        "node_modules",
+        "lib"
+    ]
+}
