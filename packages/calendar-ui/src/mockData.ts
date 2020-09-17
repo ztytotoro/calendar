@@ -65,8 +65,8 @@ export const events = [
     {
       type: RepeatTypes.DayOfMonth,
       start: new Date('2020-1-1'),
-      days: [1, 2, 3, 31],
-      months: [1, 2, 3, 10],
+      days: [1, 2, 3, 25, 31],
+      months: [1, 2, 3, 9, 10],
       times: 11,
     }
   ),

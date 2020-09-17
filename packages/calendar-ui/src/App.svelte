@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { addMonths, getCalendarMonth } from "calendar-core";
+  import { addMonths, getCalendarMonth } from 'calendar-core';
 
-  import { events as mockData } from "./mockData";
+  import { events as mockData } from './mockData';
 
-  export const height: number | string = "100vh";
-  export const width: number | string = "100vw";
+  export const height: number | string = '100vh';
+  export const width: number | string = '100vw';
   export let events = mockData;
 
   const now = new Date();
@@ -12,7 +12,7 @@
   let year = now.getFullYear();
   let month = now.getMonth() + 1;
 
-  let calendarDateWidth = "160px";
+  let calendarDateWidth = '160px';
 
   $: view = getCalendarMonth(year, month, events);
 
@@ -29,7 +29,7 @@
   }
 
   function pad(val: number, len: number, padStr: string) {
-    let str = "" + val;
+    let str = '' + val;
     while (str.length < len) {
       str = padStr + str;
     }
@@ -42,7 +42,7 @@
     display: grid;
     width: calc((var(--calendar-date-width) + 1px) * 7);
     grid-template-columns: repeat(7, var(--calendar-date-width));
-    grid-auto-rows: 130px;
+    grid-auto-rows: auto;
     grid-gap: 1px;
     box-shadow: 0 6.4px 14.4px 0 rgba(0, 0, 0, 0.132),
       0 1.2px 3.6px 0 rgba(0, 0, 0, 0.108);
@@ -53,6 +53,8 @@
     display: flex;
     flex-direction: column;
     padding: 0;
+    font-weight: bold;
+    cursor: default;
   }
 
   .calendar-date {
@@ -61,6 +63,9 @@
     flex-direction: column;
     padding: 0;
     transition: ease-in 0.13s;
+    height: 130px;
+    cursor: default;
+    position: relative;
   }
 
   .calendar-date:hover {
@@ -81,10 +86,11 @@
     align-items: center;
     height: 30px;
     line-height: 30px;
+    cursor: pointer;
   }
 
   .calendar-event::before {
-    content: "";
+    content: '';
     display: block;
     width: 4px;
     height: 100%;
@@ -107,6 +113,15 @@
 
   .today {
     font-weight: bold;
+  }
+
+  .today-mark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 7px;
+    background-color: rgb(9, 121, 226);
   }
 </style>
 
@@ -148,11 +163,10 @@
         class="calendar-date"
         class:grey={v.date.getMonth() + 1 !== month}
         class:today={v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}>
-        <p class="calendar-date-text">
-          {v.day}&nbsp;日{#if v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}
-            &nbsp;📅
-          {/if}
-        </p>
+        {#if v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}
+          <div class="today-mark" />
+        {/if}
+        <p class="calendar-date-text">{v.day}&nbsp;日</p>
 
         {#each v.events as e}
           <div class="calendar-event">
