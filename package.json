@@ -1,6 +1,10 @@
 {
   "name": "kalender",
   "private": true,
+  "workspaces": [
+    "packages/core",
+    "packages/ui"
+  ],
   "devDependencies": {
     "lerna": "^3.22.1"
   }
