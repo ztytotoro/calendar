@@ -9,6 +9,17 @@
     "src",
     "types"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ztytotoro/kalender.git",
+    "directory": "packages/ui"
+  },
+  "author": "ztytotoro@outlook.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ztytotoro/kalender/issues"
+  },
+  "homepage": "https://github.com/ztytotoro/kalender#readme",
   "scripts": {
     "build": "rollup -c"
   },
