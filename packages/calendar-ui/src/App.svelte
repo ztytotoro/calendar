@@ -1,35 +1,21 @@
 <script lang="ts">
-  import { addMonths, getCalendarMonth } from 'calendar-core';
+  import { getCalendarMonth } from "calendar-core";
 
-  import { events as mockData } from './mockData';
-
-  export const height: number | string = '100vh';
-  export const width: number | string = '100vw';
-  export let events = mockData;
+  export const height: number | string = "100vh";
+  export const width: number | string = "100vw";
+  export let events = [];
 
   const now = new Date();
 
-  let year = now.getFullYear();
-  let month = now.getMonth() + 1;
+  export let year = now.getFullYear();
+  export let month = now.getMonth() + 1;
 
-  let calendarDateWidth = '160px';
+  let calendarDateWidth = "160px";
 
   $: view = getCalendarMonth(year, month, events);
 
-  function prevMonth() {
-    const { year: y, month: m } = addMonths({ year, month }, -1);
-    year = y;
-    month = m;
-  }
-
-  function nextMonth() {
-    const { year: y, month: m } = addMonths({ year, month }, 1);
-    year = y;
-    month = m;
-  }
-
   function pad(val: number, len: number, padStr: string) {
-    let str = '' + val;
+    let str = "" + val;
     while (str.length < len) {
       str = padStr + str;
     }
@@ -90,7 +76,7 @@
   }
 
   .calendar-event::before {
-    content: '';
+    content: "";
     display: block;
     width: 4px;
     height: 100%;
@@ -126,55 +112,44 @@
 </style>
 
 <svelte:options tag={null} />
-<div>
-  <div>
-    <input type="number" bind:value={year} />
-    <input type="number" bind:value={month} />
+<div class="calendar" style="--calendar-date-width:{calendarDateWidth}">
+  <div class="calendar-header">
+    <p class="calendar-date-text">星期一</p>
   </div>
-  <div style="margin: 20px 0">
-    <button on:click={prevMonth}> Prev </button>
-    <button on:click={nextMonth}> Next </button>
+  <div class="calendar-header">
+    <p class="calendar-date-text">星期二</p>
   </div>
+  <div class="calendar-header">
+    <p class="calendar-date-text">星期三</p>
+  </div>
+  <div class="calendar-header">
+    <p class="calendar-date-text">星期四</p>
+  </div>
+  <div class="calendar-header">
+    <p class="calendar-date-text">星期五</p>
+  </div>
+  <div class="calendar-header">
+    <p class="calendar-date-text">星期六</p>
+  </div>
+  <div class="calendar-header">
+    <p class="calendar-date-text">星期日</p>
+  </div>
+  {#each view as v}
+    <div
+      class="calendar-date"
+      class:grey={v.date.getMonth() + 1 !== month}
+      class:today={v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}>
+      {#if v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}
+        <div class="today-mark" />
+      {/if}
+      <p class="calendar-date-text">{v.day}&nbsp;日</p>
 
-  <div class="calendar" style="--calendar-date-width:{calendarDateWidth}">
-    <div class="calendar-header">
-      <p class="calendar-date-text">星期一</p>
+      {#each v.events as e}
+        <div class="calendar-event">
+          <span>{pad(e.start.hour, 2, '0')}:{pad(e.start.minute, 2, '0')}:{pad(e.start.second, 2, '0')}</span>
+          <span>{e.title}</span>
+        </div>
+      {/each}
     </div>
-    <div class="calendar-header">
-      <p class="calendar-date-text">星期二</p>
-    </div>
-    <div class="calendar-header">
-      <p class="calendar-date-text">星期三</p>
-    </div>
-    <div class="calendar-header">
-      <p class="calendar-date-text">星期四</p>
-    </div>
-    <div class="calendar-header">
-      <p class="calendar-date-text">星期五</p>
-    </div>
-    <div class="calendar-header">
-      <p class="calendar-date-text">星期六</p>
-    </div>
-    <div class="calendar-header">
-      <p class="calendar-date-text">星期日</p>
-    </div>
-    {#each view as v}
-      <div
-        class="calendar-date"
-        class:grey={v.date.getMonth() + 1 !== month}
-        class:today={v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}>
-        {#if v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}
-          <div class="today-mark" />
-        {/if}
-        <p class="calendar-date-text">{v.day}&nbsp;日</p>
-
-        {#each v.events as e}
-          <div class="calendar-event">
-            <span>{pad(e.start.hour, 2, '0')}:{pad(e.start.minute, 2, '0')}:{pad(e.start.second, 2, '0')}</span>
-            <span>{e.title}</span>
-          </div>
-        {/each}
-      </div>
-    {/each}
-  </div>
+  {/each}
 </div>

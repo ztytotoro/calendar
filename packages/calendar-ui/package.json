@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "lib/index.js",
   "module": "lib/index.js",
-  "types": "lib/types/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
     "lib",
-    "src"
+    "src",
+    "types"
   ],
   "scripts": {
     "build": "rollup -c",

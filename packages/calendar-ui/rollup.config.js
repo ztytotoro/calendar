@@ -64,9 +64,6 @@ export default {
     }),
     commonjs(),
     typescript({
-      declaration: true,
-      declarationDir: 'lib/types/',
-      rootDir: 'src/',
       // sourceMap: !production,
       // inlineSources: !production,
     }),
