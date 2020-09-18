@@ -24,14 +24,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: yarn install --frozen-lockfile
       - uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: yarn config set registry https://registry.npmjs.org/
-      - run: yarn install --frozen-lockfile
-      - run: yarn run build
-      - run: yarn run pub
+      - run: npm i -g lerna
+      - run: lerna run build
+      - run: lerna run pub
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
 
@@ -40,13 +40,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: yarn install --frozen-lockfile
       - uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-      - run: yarn config set registry https://npm.pkg.github.com/
-      - run: yarn install --frozen-lockfile
-      - run: yarn run build
-      - run: yarn run pub
+      - run: npm i -g lerna
+      - run: lerna run build
+      - run: lerna run pub
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
