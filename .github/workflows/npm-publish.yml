@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: yarn logout
+      - run: yarn config set registry https://registry.npmjs.org/
       - run: yarn install --frozen-lockfile
       - run: yarn run build
       - run: yarn run pub
@@ -44,7 +44,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-      - run: yarn logout
+      - run: yarn config set registry https://npm.pkg.github.com/
       - run: yarn install --frozen-lockfile
       - run: yarn run build
       - run: yarn run pub
