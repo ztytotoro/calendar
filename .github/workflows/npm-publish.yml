@@ -31,7 +31,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i -g lerna
       - run: lerna run build
-      - run: lerna run pub:npm
+      - run: lerna run pub
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
 
@@ -46,6 +46,7 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
       - run: npm i -g lerna
+      - run: npm config set registry https://npm.pkg.github.com/
       - run: lerna run build
       - run: lerna run pub
         env:
