@@ -9,7 +9,8 @@
         "test": "jest",
         "lint": "eslint --fix ./src --ext .ts,.tsx",
         "build": "rollup -c",
-        "pub": "npm publish --access public"
+        "pub:npm": "npm publish --access public",
+        "pub": "npm publish"
     },
     "gitHooks": {
         "pre-commit": "lint-staged",
