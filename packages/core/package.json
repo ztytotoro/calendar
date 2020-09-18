@@ -1,6 +1,6 @@
 {
-  "name": "calendar-core",
-  "version": "0.0.0",
+  "name": "@kalender/core",
+  "version": "0.0.1",
   "description": "TypeScript template library",
   "main": "lib/index.common.js",
   "module": "lib/index.esm.js",

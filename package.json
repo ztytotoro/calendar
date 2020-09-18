@@ -1,5 +1,5 @@
 {
-  "name": "calendar",
+  "name": "kalender",
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"

@@ -1,18 +1,23 @@
 <script lang="ts">
-  import { getCalendarMonth } from "calendar-core";
-
-  export const height: number | string = "100vh";
-  export const width: number | string = "100vw";
-  export let events = [];
+  import { getCalendarMonth, parseEvents } from "@kalender/core";
 
   const now = new Date();
 
-  export let year = now.getFullYear();
-  export let month = now.getMonth() + 1;
+  export const height: number | string = "100vh";
+  export const width: number | string = "100vw";
+  export let year: string;
+  export let month: string;
+  export let events: string;
+
+  $: _year = year ? parseInt(year) : now.getFullYear();
+  $: _month = month ? parseInt(month) : now.getMonth() + 1;
+  $: _events = parseEvents(events);
+
+  $: console.log(_events);
 
   let calendarDateWidth = "160px";
 
-  $: view = getCalendarMonth(year, month, events);
+  $: view = getCalendarMonth(_year, _month, _events);
 
   function pad(val: number, len: number, padStr: string) {
     let str = "" + val;
@@ -137,7 +142,7 @@
   {#each view as v}
     <div
       class="calendar-date"
-      class:grey={v.date.getMonth() + 1 !== month}
+      class:grey={v.date.getMonth() + 1 !== _month}
       class:today={v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}>
       {#if v.date.getMonth() === now.getMonth() && v.date.getFullYear() === now.getFullYear() && v.date.getDate() === now.getDate()}
         <div class="today-mark" />

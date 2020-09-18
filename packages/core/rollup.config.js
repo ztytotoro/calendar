@@ -5,7 +5,7 @@ import pathsTransformer from 'ts-transform-paths';
 
 export default [
   {
-    input: 'src/core/index.ts',
+    input: 'src/index.ts',
     output: {
       file: 'lib/index.common.js',
       format: 'cjs',
@@ -14,7 +14,7 @@ export default [
     plugins: [typescript(), resolve(), commonjs()],
   },
   {
-    input: 'src/core/index.ts',
+    input: 'src/index.ts',
     output: {
       file: 'lib/index.esm.js',
       format: 'esm',
