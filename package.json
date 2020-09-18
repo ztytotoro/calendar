@@ -1,5 +1,6 @@
 {
   "name": "kalender",
+  "private": true,
   "workspaces": [
     "packages/core",
     "packages/ui"
