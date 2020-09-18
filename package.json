@@ -10,6 +10,6 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "pub": "lerna run publish"
+    "pub": "lerna run pub"
   }
 }

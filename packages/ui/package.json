@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/ztytotoro/kalender#readme",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "pub": "npm publish"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
