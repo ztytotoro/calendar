@@ -3,8 +3,8 @@ import {
   addMonths,
   getCalendarMonth,
   createEvent,
-  RepeatTypes
-} from 'calendar-core';
+  RepeatTypes,
+} from '@kalender/core';
 import './App.css';
 
 const App = defineComponent(() => {
@@ -12,7 +12,7 @@ const App = defineComponent(() => {
 
   const current = reactive({
     year: now.getFullYear(),
-    month: now.getMonth() + 1
+    month: now.getMonth() + 1,
   });
 
   const events = [
@@ -23,19 +23,19 @@ const App = defineComponent(() => {
         start: {
           hour: 12,
           minute: 0,
-          second: 0
+          second: 0,
         },
         end: {
           hour: 12,
           minute: 0,
-          second: 0
-        }
+          second: 0,
+        },
       },
       {
         type: RepeatTypes.Interval,
         start: new Date(),
         times: 4,
-        interval: 4
+        interval: 4,
       }
     ),
     createEvent(
@@ -45,13 +45,13 @@ const App = defineComponent(() => {
         start: {
           hour: 12,
           minute: 0,
-          second: 0
+          second: 0,
         },
         end: {
           hour: 12,
           minute: 0,
-          second: 0
-        }
+          second: 0,
+        },
       },
       {
         type: RepeatTypes.DayOfWeek,
@@ -59,7 +59,7 @@ const App = defineComponent(() => {
         days: [1, 2, 3],
         times: 5,
         weeks: 5,
-        interval: 3
+        interval: 3,
       }
     ),
     createEvent(
@@ -69,20 +69,20 @@ const App = defineComponent(() => {
         start: {
           hour: 12,
           minute: 0,
-          second: 0
+          second: 0,
         },
         end: {
           hour: 12,
           minute: 0,
-          second: 0
-        }
+          second: 0,
+        },
       },
       {
         type: RepeatTypes.DayOfMonth,
         start: new Date('2020-1-1'),
         days: [1, 2, 3, 31],
         months: [1, 2, 3, 10],
-        times: 11
+        times: 11,
       }
     ),
     createEvent(
@@ -92,13 +92,13 @@ const App = defineComponent(() => {
         start: {
           hour: 12,
           minute: 0,
-          second: 0
+          second: 0,
         },
         end: {
           hour: 12,
           minute: 0,
-          second: 0
-        }
+          second: 0,
+        },
       },
       {
         type: RepeatTypes.MonthDay,
@@ -106,9 +106,9 @@ const App = defineComponent(() => {
         month: 6,
         day: 5,
         interval: 2,
-        times: 1
+        times: 1,
       }
-    )
+    ),
   ];
 
   const view = computed(() =>
@@ -140,10 +140,10 @@ const App = defineComponent(() => {
         Next
       </button>
       <div class="calendar">
-        {view.value.map(v => (
+        {view.value.map((v) => (
           <div>
             <p>{v.day}</p>
-            {v.events.map(e => (
+            {v.events.map((e) => (
               <p>{e.title}</p>
             ))}
           </div>
