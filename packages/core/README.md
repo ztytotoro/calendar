@@ -59,4 +59,4 @@ createEvent(
 );
 ```
 
-### See more details in `/packages/demos/vue`
+### See more details in [`/packages/demos/vue/src/App.vue`](https://github.com/ztytotoro/kalender/blob/master/packages/demos/vue/src/App.vue)
