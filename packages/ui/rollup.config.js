@@ -82,7 +82,7 @@ export default [
     input: 'src/index.ts',
     output: {
       sourcemap: true,
-      file: 'lib/index.full.esm.js',
+      file: 'lib/index.esm.browser.js',
       format: 'esm',
     },
     plugins: [
