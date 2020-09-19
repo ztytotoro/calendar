@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getCalendarMonth, parseEvents } from "@kalender/core";
+  import { getCalendarMonth, parseEvents } from '@kalender/core';
 
   const now = new Date();
 
-  export const height: number | string = "100vh";
-  export const width: number | string = "100vw";
+  export const height: number | string = '100vh';
+  export const width: number | string = '100vw';
   export let year: string;
   export let month: string;
   export let events: string;
@@ -13,14 +13,12 @@
   $: _month = month ? parseInt(month) : now.getMonth() + 1;
   $: _events = parseEvents(events);
 
-  $: console.log(_events);
-
-  let calendarDateWidth = "160px";
+  let calendarDateWidth = '160px';
 
   $: view = getCalendarMonth(_year, _month, _events);
 
   function pad(val: number, len: number, padStr: string) {
-    let str = "" + val;
+    let str = '' + val;
     while (str.length < len) {
       str = padStr + str;
     }
@@ -81,7 +79,7 @@
   }
 
   .calendar-event::before {
-    content: "";
+    content: '';
     display: block;
     width: 4px;
     height: 100%;

@@ -4,7 +4,7 @@
     "description": "TypeScript template library",
     "main": "lib/index.common.js",
     "module": "lib/index.esm.js",
-    "typings": "lib/core/index.d.ts",
+    "typings": "lib/index.d.ts",
     "scripts": {
         "test": "jest",
         "lint": "eslint --fix ./src --ext .ts,.tsx",
@@ -57,15 +57,10 @@
         "jest": "^26.4.2",
         "lint-staged": "^10.4.0",
         "prettier": "^2.1.2",
-        "rollup": "^2.27.1",
-        "rollup-plugin-commonjs": "^10.1.0",
-        "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-typescript2": "^0.27.2",
         "ts-transform-paths": "^2.0.1",
-        "tslib": "^2.0.1",
         "tslint-config-prettier": "^1.18.0",
         "tslint-plugin-prettier": "^2.3.0",
-        "typescript": "^4.0.2",
         "yorkie": "^2.0.0"
     }
 }

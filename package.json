@@ -6,7 +6,13 @@
     "packages/ui"
   ],
   "devDependencies": {
-    "lerna": "^3.22.1"
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "lerna": "^3.22.1",
+    "rollup": "^2.3.4",
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.2"
   },
   "scripts": {
     "build": "lerna run build",
