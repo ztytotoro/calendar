@@ -1,62 +1,11 @@
-## @kanlender/core
+## @kanlender/reactive
 
 ### Usage
 
-#### generate a calendar month:
-
 ```ts
-const days = getCalendarMonth(year, month, events);
+import {} from '@kanlender/reactive';
 
-// returns
-
-type CalendarDays = {
-    day: number;
-    date: Date;
-    events: {
-        title: string;
-        description: string;
-        start: {
-            hour: number;
-            minute: number;
-            second: number;
-        };
-        end: {
-            hour: number;
-            minute: number;
-            second: number;
-        };
-    };
-}[];
+const calendar = useCalendar(events);
 ```
 
-#### create a calendar event:
-
-```ts
-const events = [createEvent(option, repeatOption)];
-
-// example
-createEvent(
-    {
-        title: 'A event repeat every {interval} days',
-        description: 'some description',
-        start: {
-            hour: 12,
-            minute: 0,
-            second: 0,
-        },
-        end: {
-            hour: 12,
-            minute: 0,
-            second: 0,
-        },
-    },
-    {
-        type: RepeatTypes.Interval,
-        start: new Date(),
-        times: 4,
-        interval: 4,
-    }
-);
-```
-
-### See more details in `/packages/demos/vue`
+### See more details in `/packages/demos/vue/src/App.tsx`
