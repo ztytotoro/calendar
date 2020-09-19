@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
@@ -10,159 +11,156 @@
     <link rel="stylesheet" href="/global.css" />
 
     <script defer type="module">
-      import {
-        CalendarElement,
-        createEvent,
-        RepeatTypes,
-        addMonths,
-      } from './index.js';
-      import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js';
+        import {
+            CalendarElement,
+            createEvent,
+            RepeatTypes,
+            addMonths,
+        } from 'https://cdn.jsdelivr.net/npm/@kalender/ui@0.1.1/lib/index.web.js';
+        import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js';
 
-      const events = [
-        createEvent(
-          {
-            title: '吔💩',
-            description: '真香',
-            start: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-            end: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-          },
-          {
-            type: RepeatTypes.Interval,
-            start: new Date(),
-            times: 4,
-            interval: 4,
-          }
-        ),
-        createEvent(
-          {
-            title: '开🚗',
-            description: '真xuan',
-            start: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-            end: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-          },
-          {
-            type: RepeatTypes.DayOfWeek,
-            start: new Date(),
-            days: [1, 2, 3],
-            times: 5,
-            weeks: 5,
-            interval: 3,
-          }
-        ),
-        createEvent(
-          {
-            title: '看😎',
-            description: 'Happy',
-            start: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-            end: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-          },
-          {
-            type: RepeatTypes.DayOfMonth,
-            start: new Date('2020-1-1'),
-            days: [1, 2, 3, 25, 31],
-            months: [1, 2, 3, 9, 10],
-            times: 11,
-          }
-        ),
-        createEvent(
-          {
-            title: '🎂每年',
-            description: 'Haha',
-            start: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-            end: {
-              hour: 12,
-              minute: 0,
-              second: 0,
-            },
-          },
-          {
-            type: RepeatTypes.MonthDay,
-            start: new Date('2020-6-6'),
-            month: 6,
-            day: 5,
-            interval: 2,
-            times: 1,
-          }
-        ),
-      ];
+        const events = [
+            createEvent(
+                {
+                    title: '吔💩',
+                    description: '真香',
+                    start: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                    end: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                },
+                {
+                    type: RepeatTypes.Interval,
+                    start: new Date(),
+                    times: 4,
+                    interval: 4,
+                }
+            ),
+            createEvent(
+                {
+                    title: '开🚗',
+                    description: '真xuan',
+                    start: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                    end: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                },
+                {
+                    type: RepeatTypes.DayOfWeek,
+                    start: new Date(),
+                    days: [1, 2, 3],
+                    times: 5,
+                    weeks: 5,
+                    interval: 3,
+                }
+            ),
+            createEvent(
+                {
+                    title: '看😎',
+                    description: 'Happy',
+                    start: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                    end: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                },
+                {
+                    type: RepeatTypes.DayOfMonth,
+                    start: new Date('2020-1-1'),
+                    days: [1, 2, 3, 25, 31],
+                    months: [1, 2, 3, 9, 10],
+                    times: 11,
+                }
+            ),
+            createEvent(
+                {
+                    title: '🎂每年',
+                    description: 'Haha',
+                    start: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                    end: {
+                        hour: 12,
+                        minute: 0,
+                        second: 0,
+                    },
+                },
+                {
+                    type: RepeatTypes.MonthDay,
+                    start: new Date('2020-6-6'),
+                    month: 6,
+                    day: 5,
+                    interval: 2,
+                    times: 1,
+                }
+            ),
+        ];
 
-      customElements.define('svelte-calendar', CalendarElement);
+        customElements.define('svelte-calendar', CalendarElement);
 
-      const now = new Date();
+        const now = new Date();
 
-      new Vue({
-        el: '#app',
-        data: {
-          year: now.getFullYear(),
-          month: now.getMonth() + 1,
-          events: JSON.stringify(events),
-        },
-        methods: {
-          prevMonth() {
-            const { year, month } = addMonths(
-              { year: this.year, month: this.month },
-              -1
-            );
-            this.year = year;
-            this.month = month;
-          },
+        new Vue({
+            el: '#app',
+            data: {
+                year: now.getFullYear(),
+                month: now.getMonth() + 1,
+                events: JSON.stringify(events),
+            },
+            methods: {
+                prevMonth() {
+                    const { year, month } = addMonths(
+                        { year: this.year, month: this.month },
+                        -1
+                    );
+                    this.year = year;
+                    this.month = month;
+                },
 
-          nextMonth() {
-            const { year, month } = addMonths(
-              { year: this.year, month: this.month },
-              1
-            );
-            this.year = year;
-            this.month = month;
-          },
-        },
-      });
+                nextMonth() {
+                    const { year, month } = addMonths(
+                        { year: this.year, month: this.month },
+                        1
+                    );
+                    this.year = year;
+                    this.month = month;
+                },
+            },
+        });
     </script>
-  </head>
+</head>
 
-  <body>
+<body>
     <div id="app">
-      <div>
-        <input type="number" v-model.number="year" />
-        <input type="number" v-model.number="month" />
-      </div>
-      <div style="margin: 20px 0">
-        <button @click="prevMonth">Prev</button>
-        <button @click="nextMonth">Next</button>
-      </div>
-      <svelte-calendar
-        :events="events"
-        :year="year"
-        :month="month"
-      ></svelte-calendar>
+        <div>
+            <input type="number" v-model.number="year" />
+            <input type="number" v-model.number="month" />
+        </div>
+        <div style="margin: 20px 0">
+            <button @click="prevMonth">Prev</button>
+            <button @click="nextMonth">Next</button>
+        </div>
+        <svelte-calendar :events="events" :year="year" :month="month"></svelte-calendar>
     </div>
-  </body>
+</body>
+
 </html>
