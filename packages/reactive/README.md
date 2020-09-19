@@ -3,7 +3,7 @@
 ### Usage
 
 ```ts
-import {} from '@kanlender/reactive';
+import { useCalendar } from '@kanlender/reactive';
 
 const calendar = useCalendar(events);
 ```
