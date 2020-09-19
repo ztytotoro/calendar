@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/core", "packages/ui"],
+  "packages": ["packages/core", "packages/ui", "packages/reactive"],
   "version": "0.1.3",
   "npmClient": "npm"
 }

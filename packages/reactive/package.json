@@ -1,0 +1,74 @@
+{
+    "name": "@kalender/reactive",
+    "version": "0.1.3",
+    "description": "calendar core library for vue",
+    "keywords": [
+        "calendar",
+        "kalender"
+    ],
+    "main": "lib/index.common.js",
+    "module": "lib/index.esm.js",
+    "typings": "lib/index.d.ts",
+    "scripts": {
+        "test": "jest",
+        "lint": "eslint --fix ./src --ext .ts,.tsx",
+        "build": "rollup -c",
+        "pub": "npm publish --access public"
+    },
+    "gitHooks": {
+        "pre-commit": "lint-staged",
+        "commit-msg": "node scripts/verifyCommit.js"
+    },
+    "lint-staged": {
+        "*.js": [
+            "prettier --write",
+            "git add"
+        ],
+        "*.ts?(x)": [
+            "prettier --parser=typescript --write",
+            "git add"
+        ]
+    },
+    "files": [
+        "src/*.ts",
+        "lib/*.js",
+        "lib/*.d.ts"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ztytotoro/kalender.git",
+        "directory": "packages/reactive"
+    },
+    "author": "ztytotoro@outlook.com",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ztytotoro/kalender/issues"
+    },
+    "homepage": "https://github.com/ztytotoro/kalender#readme",
+    "devDependencies": {
+        "@babel/core": "^7.11.6",
+        "@babel/preset-env": "^7.11.5",
+        "@babel/preset-typescript": "^7.10.4",
+        "@types/jest": "^26.0.14",
+        "@typescript-eslint/eslint-plugin": "^4.1.1",
+        "@typescript-eslint/parser": "^4.1.1",
+        "babel-jest": "^26.3.0",
+        "chalk": "^4.1.0",
+        "eslint": "^7.9.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "jest": "^26.4.2",
+        "lint-staged": "^10.4.0",
+        "prettier": "^2.1.2",
+        "rollup-plugin-typescript2": "^0.27.2",
+        "ts-transform-paths": "^2.0.1",
+        "tslint-config-prettier": "^1.18.0",
+        "tslint-plugin-prettier": "^2.3.0",
+        "yorkie": "^2.0.0"
+    },
+    "dependencies": {
+        "vue": "^3.0.0",
+        "@kalender/core": "^0.1.3"
+    }
+}
