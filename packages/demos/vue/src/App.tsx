@@ -8,8 +8,8 @@ const App = defineComponent(() => {
   return () => (
     <div>
       <div>
-        <input type="number" v-model={[calendar.year, ['number']]} />
-        <input type="number" v-model={[calendar.month, ['number']]} />
+        <input type="number" v-model={[calendar.year.value, ['number']]} />
+        <input type="number" v-model={[calendar.month.value, ['number']]} />
       </div>
       <button onClick={calendar.prev}>Prev</button>
       <button onClick={calendar.next}>Next</button>

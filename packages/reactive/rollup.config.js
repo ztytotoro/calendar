@@ -11,6 +11,7 @@ export default [
             format: 'cjs',
             sourcemap: true,
         },
+        external: ['@kalender/core', 'vue'],
         plugins: [typescript(), resolve(), commonjs()],
     },
     {
@@ -20,6 +21,7 @@ export default [
             format: 'esm',
             sourcemap: true,
         },
+        external: ['@kalender/core', 'vue'],
         plugins: [
             typescript({
                 transformers: [(service) => pathsTransformer()],

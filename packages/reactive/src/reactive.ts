@@ -1,6 +1,11 @@
 import { ref, computed, Ref, ComputedRef } from 'vue';
-import { addMonths, extract, getCalendarMonth } from '@kalender/core';
-import { CalendarDate, CalendarEvent } from '@kalender/core/lib/event';
+import {
+    addMonths,
+    extract,
+    getCalendarMonth,
+    CalendarDate,
+    CalendarEvent,
+} from '@kalender/core';
 
 export function useYearMonth(
     year: number = new Date().getFullYear(),
@@ -9,17 +14,22 @@ export function useYearMonth(
     const _year = ref(year);
     const _month = ref(month);
 
-    const add = (val: number) => {
+    function add(val: number) {
         const { year: y, month: m } = addMonths(
             { year: _year.value, month: _month.value },
             val
         );
         _year.value = y;
         _month.value = m;
-    };
+    }
 
-    const next = () => add(1);
-    const prev = () => add(-1);
+    function next() {
+        return add(1);
+    }
+
+    function prev() {
+        return add(-1);
+    }
 
     return {
         year: _year,
