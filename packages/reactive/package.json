@@ -1,6 +1,6 @@
 {
     "name": "@kalender/reactive",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "calendar core library for vue",
     "keywords": [
         "calendar",
@@ -68,7 +68,7 @@
         "yorkie": "^2.0.0"
     },
     "dependencies": {
-        "@kalender/core": "^0.2.0",
+        "@kalender/core": "^0.2.1",
         "vue": "^3.0.0"
     }
 }
