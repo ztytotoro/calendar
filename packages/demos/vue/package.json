@@ -30,8 +30,8 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@kalender/core": "^0.1.3",
-    "@kalender/reactive": "^0.1.3",
+    "@kalender/core": "^0.2.0",
+    "@kalender/reactive": "^0.2.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },
