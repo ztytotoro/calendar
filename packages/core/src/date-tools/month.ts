@@ -77,3 +77,15 @@ export function theLastWeekDay(year: number, month: number, weekDay: WeekDay) {
 
   return date;
 }
+
+export function theNthWeekDay(
+  year: number,
+  month: number,
+  weekDay: WeekDay,
+  rank = 0
+) {
+  if (rank === -1) {
+    return theLastWeekDay(year, month, weekDay);
+  }
+  return addDays(theFirstWeekDay(year, month, weekDay), 7 * rank);
+}

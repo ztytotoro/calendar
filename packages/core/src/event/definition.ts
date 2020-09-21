@@ -59,6 +59,7 @@ export type CalendarRepeat<T = any> = (T extends RepeatTypes.Interval
       // 0 is first and -1 is the last
       rank?: number;
       weekDay: WeekDay;
+      interval?: number;
       // times is not supported
     }
   : {}) & {

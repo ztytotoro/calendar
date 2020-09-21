@@ -11,6 +11,7 @@ import {
   normalDate,
   theFirstWeekDay,
   theLastWeekDay,
+  theNthWeekDay,
   toPositiveInt,
   WeekDays,
   weekDaysBetween,
@@ -152,11 +153,32 @@ export function setupHandlers() {
       return false;
     }
 
+    if (!isNthWeekDay(date, option.weekDay, getDefault(option.rank, 0))) {
+      return false;
+    }
+
+    const { year } = extract(option.start);
+
+    let start = theNthWeekDay(
+      year,
+      option.month,
+      option.weekDay,
+      getDefault(option.rank, 0)
+    );
+
+    if (start.valueOf() < eraseTime(option.start).valueOf()) {
+      start = theNthWeekDay(
+        year + 1,
+        option.month,
+        option.weekDay,
+        getDefault(option.rank, 0)
+      );
+    }
+
     const { month } = extract(date);
 
-    return (
-      isNthWeekDay(date, option.weekDay, getDefault(option.rank, 0)) &&
-      option.month === month
-    );
+    const diff = diffTime(start, date);
+
+    return diff.month === 0 && diff.year % getDefault(option.interval, 1) === 0;
   });
 }

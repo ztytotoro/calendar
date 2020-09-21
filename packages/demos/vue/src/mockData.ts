@@ -8,19 +8,19 @@ export const events = [
       start: {
         hour: 12,
         minute: 0,
-        second: 0,
+        second: 0
       },
       end: {
         hour: 12,
         minute: 0,
-        second: 0,
-      },
+        second: 0
+      }
     },
     {
       type: RepeatTypes.Interval,
       start: new Date(),
       times: 4,
-      interval: 4,
+      interval: 4
     }
   ),
   createEvent(
@@ -30,13 +30,13 @@ export const events = [
       start: {
         hour: 12,
         minute: 0,
-        second: 0,
+        second: 0
       },
       end: {
         hour: 12,
         minute: 0,
-        second: 0,
-      },
+        second: 0
+      }
     },
     {
       type: RepeatTypes.DayOfWeek,
@@ -44,7 +44,7 @@ export const events = [
       days: [1, 2, 3],
       times: 5,
       weeks: 5,
-      interval: 3,
+      interval: 3
     }
   ),
   createEvent(
@@ -54,20 +54,20 @@ export const events = [
       start: {
         hour: 12,
         minute: 0,
-        second: 0,
+        second: 0
       },
       end: {
         hour: 12,
         minute: 0,
-        second: 0,
-      },
+        second: 0
+      }
     },
     {
       type: RepeatTypes.DayOfMonth,
       start: new Date('2020-1-1'),
       days: [1, 2, 3, 31],
       months: [1, 2, 3, 10],
-      times: 11,
+      times: 11
     }
   ),
   createEvent(
@@ -77,13 +77,13 @@ export const events = [
       start: {
         hour: 12,
         minute: 0,
-        second: 0,
+        second: 0
       },
       end: {
         hour: 12,
         minute: 0,
-        second: 0,
-      },
+        second: 0
+      }
     },
     {
       type: RepeatTypes.MonthDay,
@@ -91,7 +91,54 @@ export const events = [
       month: 6,
       day: 5,
       interval: 2,
-      times: 1,
+      times: 1
     }
   ),
+  createEvent(
+    {
+      title: '🎂每两个月的最后一个周一',
+      description: 'Haha',
+      start: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      },
+      end: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      }
+    },
+    {
+      type: RepeatTypes.NthWeekDayOfIntervalMonth,
+      start: new Date('2020-6-6'),
+      interval: 2,
+      weekDay: 1,
+      rank: -1
+    }
+  ),
+  createEvent(
+    {
+      title: '🎂每两年的7月的最后一个周一',
+      description: 'Haha',
+      start: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      },
+      end: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      }
+    },
+    {
+      type: RepeatTypes.NthWeekDayOfSpecifiedMonth,
+      start: new Date('2020-6-6'),
+      interval: 2,
+      month: 7,
+      weekDay: 1,
+      rank: -1
+    }
+  )
 ];
