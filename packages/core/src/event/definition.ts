@@ -6,6 +6,8 @@ export enum RepeatTypes {
   DayOfMonth = 'DayOfMonth',
   DayOfYear = 'DayOfYear',
   MonthDay = 'MonthDay',
+  NthWeekDayOfIntervalMonth = 'NthWeekDayOfIntervalMonth',
+  NthWeekDayOfSpecifiedMonth = 'NthWeekDayOfSpecifiedMonth',
 }
 
 export type CalendarRepeat<T = any> = (T extends RepeatTypes.Interval
@@ -42,6 +44,22 @@ export type CalendarRepeat<T = any> = (T extends RepeatTypes.Interval
       day: number;
       interval?: number;
       timesOfYear?: number;
+    }
+  : T extends RepeatTypes.NthWeekDayOfIntervalMonth
+  ? {
+      interval?: number;
+      // 0 is first and -1 is the last
+      rank?: number;
+      weekDay: WeekDay;
+      // times is not supported
+    }
+  : T extends RepeatTypes.NthWeekDayOfSpecifiedMonth
+  ? {
+      month: number;
+      // 0 is first and -1 is the last
+      rank?: number;
+      weekDay: WeekDay;
+      // times is not supported
     }
   : {}) & {
   type: T;

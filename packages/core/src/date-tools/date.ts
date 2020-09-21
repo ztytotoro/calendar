@@ -37,7 +37,7 @@ export function extract(date: Date) {
   };
 }
 
-export function normalDate(year: number, month: number, day: number) {
+export function normalDate(year: number, month: number, day: number = 1) {
   return new Date(year, month - 1, day);
 }
 

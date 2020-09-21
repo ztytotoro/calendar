@@ -1,4 +1,6 @@
-import { extract, getWeekDay, normalDate } from './date';
+import { eraseTime, extract, getWeekDay, normalDate } from './date';
+import { WeekDay } from './definition';
+import { addDays, diffTime } from './timespan';
 import { lastOf } from './utils';
 
 export function daysOfMonth(year: number, month: number): number {
@@ -44,4 +46,34 @@ export function addMonths(
     year: y,
     month: m,
   };
+}
+
+export function isNthWeekDay(date: Date, weekDay: WeekDay, rank = 0) {
+  const { year, month } = extract(date);
+  if (rank === -1) {
+    const diff = diffTime(theLastWeekDay(year, month, weekDay), date);
+    return diff.year === 0 && diff.month === 0 && diff.day === 0;
+  }
+  const diff = diffTime(theFirstWeekDay(year, month, weekDay), date);
+  return diff.year === 0 && diff.month === 0 && diff.day === rank * 7;
+}
+
+export function theFirstWeekDay(year: number, month: number, weekDay: WeekDay) {
+  let date = normalDate(year, month, 1);
+
+  while (getWeekDay(date) !== weekDay) {
+    date = addDays(date, 1);
+  }
+
+  return date;
+}
+
+export function theLastWeekDay(year: number, month: number, weekDay: WeekDay) {
+  let date = normalDate(year, month + 1, 0);
+
+  while (getWeekDay(date) !== weekDay) {
+    date = addDays(date, -1);
+  }
+
+  return date;
 }
