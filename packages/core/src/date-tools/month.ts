@@ -57,7 +57,7 @@ export function addMonths(
 
 export function isNthWeekDay(date: Date, weekDay: WeekDay, rank = 0) {
     const { year, month } = extract(date);
-    const diff = diffTime(date, theNthWeekDay(year, month, rank));
+    const diff = diffTime(date, theNthWeekDay(year, month, weekDay, rank));
 
     return diff.year === 0 && diff.month === 0 && diff.day === 0;
 }
