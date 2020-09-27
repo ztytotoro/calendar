@@ -140,5 +140,51 @@ export const events = [
       weekDay: 1,
       rank: -1
     }
+  ),
+  createEvent(
+    {
+      title: '🎂每年的7月的第三个工作日',
+      description: 'Haha',
+      start: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      },
+      end: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      }
+    },
+    {
+      type: RepeatTypes.NthWeekDayOfSpecifiedMonth,
+      start: new Date('2020-6-6'),
+      month: 7,
+      weekDay: -1,
+      rank: 2
+    }
+  ),
+  createEvent(
+    {
+      title: '🎂每年的7月的第2个周末',
+      description: 'Haha',
+      start: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      },
+      end: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      }
+    },
+    {
+      type: RepeatTypes.NthWeekDayOfSpecifiedMonth,
+      start: new Date('2020-6-6'),
+      month: 7,
+      weekDay: 0,
+      rank: 1
+    }
   )
 ];
