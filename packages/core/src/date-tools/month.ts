@@ -1,4 +1,11 @@
-import { eraseTime, extract, getWeekDay, normalDate } from './date';
+import {
+  eraseTime,
+  extract,
+  getWeekDay,
+  isWeekend,
+  isWorkDay,
+  normalDate,
+} from './date';
 import { WeekDay } from './definition';
 import { addDays, diffTime } from './timespan';
 import { lastOf } from './utils';
@@ -58,11 +65,50 @@ export function isNthWeekDay(date: Date, weekDay: WeekDay, rank = 0) {
   return diff.year === 0 && diff.month === 0 && diff.day === rank * 7;
 }
 
+export function nthWeekDay(year: number, month: number) {
+  const result: {
+    [K: number]: Date[];
+  } = {
+    [WeekDay.Monday]: [],
+    [WeekDay.Tuesday]: [],
+    [WeekDay.Wednesday]: [],
+    [WeekDay.Thursday]: [],
+    [WeekDay.Friday]: [],
+    [WeekDay.Saturday]: [],
+    [WeekDay.Sunday]: [],
+    [WeekDay.WorkDay]: [],
+    [WeekDay.Weekend]: [],
+  };
+
+  const days = daysOfMonth(year, month);
+
+  for (let day = 1; day <= days; day++) {
+    let date = normalDate(year, month, day);
+    result[getWeekDay(date)].push(date);
+    if (isWorkDay(date)) {
+      result[WeekDay.WorkDay].push(date);
+    } else {
+      result[WeekDay.Weekend].push(date);
+    }
+  }
+
+  return result;
+}
+
 export function theFirstWeekDay(year: number, month: number, weekDay: WeekDay) {
   let date = normalDate(year, month, 1);
-
-  while (getWeekDay(date) !== weekDay) {
-    date = addDays(date, 1);
+  if (weekDay === WeekDay.WorkDay) {
+    while (!isWorkDay(date)) {
+      date = addDays(date, 1);
+    }
+  } else if (weekDay === WeekDay.Weekend) {
+    while (!isWeekend(date)) {
+      date = addDays(date, 1);
+    }
+  } else {
+    while (getWeekDay(date) !== weekDay) {
+      date = addDays(date, 1);
+    }
   }
 
   return date;
@@ -71,8 +117,18 @@ export function theFirstWeekDay(year: number, month: number, weekDay: WeekDay) {
 export function theLastWeekDay(year: number, month: number, weekDay: WeekDay) {
   let date = normalDate(year, month + 1, 0);
 
-  while (getWeekDay(date) !== weekDay) {
-    date = addDays(date, -1);
+  if (weekDay === WeekDay.WorkDay) {
+    while (!isWorkDay(date)) {
+      date = addDays(date, -1);
+    }
+  } else if (weekDay === WeekDay.Weekend) {
+    while (!isWeekend(date)) {
+      date = addDays(date, -1);
+    }
+  } else {
+    while (getWeekDay(date) !== weekDay) {
+      date = addDays(date, -1);
+    }
   }
 
   return date;
@@ -87,5 +143,6 @@ export function theNthWeekDay(
   if (rank === -1) {
     return theLastWeekDay(year, month, weekDay);
   }
-  return addDays(theFirstWeekDay(year, month, weekDay), 7 * rank);
+  const weekDays = nthWeekDay(year, month);
+  return weekDays[weekDay][rank];
 }

@@ -175,8 +175,6 @@ export function setupHandlers() {
       );
     }
 
-    const { month } = extract(date);
-
     const diff = diffTime(start, date);
 
     return diff.month === 0 && diff.year % getDefault(option.interval, 1) === 0;

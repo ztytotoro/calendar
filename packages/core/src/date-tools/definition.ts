@@ -23,7 +23,18 @@ export interface YearDate {
 
 export type Defined<T> = Exclude<T, undefined | null>;
 
-export type WeekDay = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+// 0 is weekend and -1 is weekday
+export enum WeekDay {
+  WorkDay = -1,
+  Weekend = 0,
+  Monday = 1,
+  Tuesday = 2,
+  Wednesday = 3,
+  Thursday = 4,
+  Friday = 5,
+  Saturday = 6,
+  Sunday = 7,
+}
 
 export const WeekDays: WeekDay[] = [1, 2, 3, 4, 5, 6, 7];
 export const WorkDays: WeekDay[] = [1, 2, 3, 4, 5];
