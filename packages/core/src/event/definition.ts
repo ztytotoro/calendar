@@ -77,6 +77,7 @@ export interface CalendarEvent<T extends RepeatTypes = any> {
   start: Time;
   end: Time;
   repeat: CalendarRepeat<T>;
+  customData?: any;
 }
 
 export type CalendarRepeatFn<T extends RepeatTypes> = (

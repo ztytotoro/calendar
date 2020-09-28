@@ -186,5 +186,27 @@ export const events = [
       weekDay: 0,
       rank: 1
     }
+  ),
+  createEvent(
+    {
+      title: '🎂每月的最后一个周一',
+      description: 'Haha',
+      start: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      },
+      end: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      }
+    },
+    {
+      type: RepeatTypes.NthWeekDayOfIntervalMonth,
+      start: new Date('2020-6-6'),
+      weekDay: 0,
+      rank: -1
+    }
   )
 ];

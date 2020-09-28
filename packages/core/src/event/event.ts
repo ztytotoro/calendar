@@ -13,6 +13,7 @@ export function createEvent<T extends RepeatTypes>(
     start: option.start,
     end: option.end,
     repeat: repeat,
+    customData: option.customData || null,
   };
 }
 
@@ -27,6 +28,7 @@ export function createEvents(
       start: Date | string;
       end?: Date | string;
     };
+    customData?: any;
   }[]
 ): CalendarEvent[] {
   return options.map((x) => {
