@@ -11,7 +11,16 @@ export function getCalendarMonth(
     return {
       date: day,
       day: day.getDate(),
-      events: events.filter((e) => isEventMatch(day, e)),
+      events: events
+        .filter((e) => isEventMatch(day, e))
+        .sort((a, b) => {
+          return (
+            a.start.hour * 3600 +
+            a.start.minute * 60 +
+            a.start.second -
+            (b.start.hour * 3600 + b.start.minute * 60 + b.start.second)
+          );
+        }),
     } as CalendarDate;
   });
 }
