@@ -46,3 +46,15 @@ export function dayOfYear(date: Date) {
 
   return (date.valueOf() - firstDay.valueOf()) / 1000 / 3600 / 24 + 1;
 }
+
+export function addWeekDays(day: WeekDay, count: number) {
+  count = count % 7;
+  day = day + count;
+  if (day < 0) {
+    day += 7;
+  }
+  if (day > 7) {
+    day -= 7;
+  }
+  return day;
+}
