@@ -10,7 +10,7 @@
   "module": "lib/index.esm.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "eslint --fix ./src --ext .ts,.tsx",
     "build": "rollup -c",
     "pub": "npm publish --access public"
