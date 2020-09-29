@@ -5,9 +5,13 @@ import { getCalendarWeekDates } from './date-tools/week';
 export function getCalendarMonth(
   year: number,
   month: number,
-  events: CalendarEvent[] = []
+  events: CalendarEvent[] = [],
+  startOfWeek: Exclude<
+    WeekDay,
+    WeekDay.WorkDay | WeekDay.Weekend
+  > = WeekDay.Monday
 ) {
-  const days = getCalendarMonthDates(year, month);
+  const days = getCalendarMonthDates(year, month, startOfWeek);
   return days.map((day) => {
     return {
       date: day,
