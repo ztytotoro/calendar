@@ -1,4 +1,4 @@
-import { getCalendarMonthDates, WeekDay } from 'date-tools';
+import { extractDate, getCalendarMonthDates, WeekDay } from 'date-tools';
 import { CalendarDate, CalendarEvent, isEventMatch } from 'event';
 import { getCalendarWeekDates } from './date-tools/week';
 
@@ -15,7 +15,7 @@ export function getCalendarMonth(
   return days.map((day) => {
     return {
       date: day,
-      day: day.getDate(),
+      ...extractDate(day),
       events: events
         .filter((e) => isEventMatch(day, e))
         .sort((a, b) => {
@@ -42,7 +42,7 @@ export function getCalendarWeek(
   return days.map((day) => {
     return {
       date: day,
-      day: day.getDate(),
+      ...extractDate(day),
       events: events
         .filter((e) => isEventMatch(day, e))
         .sort((a, b) => {
@@ -60,7 +60,7 @@ export function getCalendarWeek(
 export function getCalendarDay(date: Date, events: CalendarEvent[] = []) {
   return {
     date: date,
-    day: date.getDate(),
+    ...extractDate(date),
     events: events
       .filter((e) => isEventMatch(date, e))
       .sort((a, b) => {

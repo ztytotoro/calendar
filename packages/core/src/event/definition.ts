@@ -86,7 +86,10 @@ export type CalendarRepeatFn<T extends RepeatTypes> = (
 ) => boolean;
 
 export interface CalendarDate {
+  year: number;
+  month: number;
   day: number;
+  weekDay: number;
   date: Date;
   events: Omit<CalendarEvent, 'id' | 'repeat'>[];
 }

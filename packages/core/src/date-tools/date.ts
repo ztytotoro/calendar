@@ -37,6 +37,15 @@ export function extract(date: Date) {
   };
 }
 
+export function extractDate(date: Date) {
+  return {
+    year: date.getFullYear(),
+    month: getMonth(date),
+    day: date.getDate(),
+    weekDay: getWeekDay(date),
+  };
+}
+
 export function normalDate(year: number, month: number, day: number = 1) {
   return new Date(year, month - 1, day);
 }
