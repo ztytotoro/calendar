@@ -67,3 +67,7 @@ export function addWeekDays(day: WeekDay, count: number) {
   }
   return day;
 }
+
+export function now() {
+  return new Date();
+}
