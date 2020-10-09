@@ -4,3 +4,4 @@ export * from './month';
 export * from './timespan';
 export * from './utils';
 export * from './year';
+export * from './week';
