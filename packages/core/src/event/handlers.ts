@@ -1,21 +1,19 @@
 import {
-    addDays,
-    daysBetween,
-    diffTime,
-    eraseTime,
-    extract,
-    getDefault,
-    getWeekDay,
-    isDefined,
-    isNthWeekDay,
-    normalDate,
-    theFirstWeekDay,
-    theLastWeekDay,
-    theNthWeekDay,
-    toPositiveInt,
-    WeekDays,
-    weekDaysBetween,
-    weeksBetween,
+  daysBetween,
+  daysOfMonth,
+  diffTime,
+  eraseTime,
+  extract,
+  getDefault,
+  getWeekDay,
+  isDefined,
+  isNthWeekDay,
+  normalDate,
+  theNthWeekDay,
+  toPositiveInt,
+  WeekDays,
+  weekDaysBetween,
+  weeksBetween,
 } from 'date-tools';
 import { RepeatTypes } from './definition';
 import { registerHandler } from './repeat';
@@ -63,8 +61,14 @@ export function setupHandlers() {
     });
 
     registerHandler(RepeatTypes.DayOfMonth, (date, option) => {
-        const { day, month } = extract(date);
-        if (!option.days.includes(day)) return false;
+        const { day, month, year } = extract(date);
+        // support days counting from end of month:
+        const maxDay = daysOfMonth(year, month);
+        const endDays = option.days
+          .filter((x) => x < 0)
+          .map((x) => x + maxDay + 1);
+
+        if (!option.days.includes(day) && !endDays.includes(day)) return false;
         if (isDefined(option.months) && !option.months.includes(month))
             return false;
         if (isDefined(option.times)) {
@@ -74,8 +78,8 @@ export function setupHandlers() {
         return true;
     });
 
-    registerHandler(RepeatTypes.DayOfYear, (date, option) => {
-        throw new Error('Handler not implemented');
+    registerHandler(RepeatTypes.DayOfYear, () => {
+      throw new Error('Handler not implemented');
     });
 
     registerHandler(RepeatTypes.MonthDay, (date, option) => {
