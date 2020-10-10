@@ -87,7 +87,8 @@ export function setupHandlers() {
       // support days counting from end of month:
       const daysRemain = daysRemainOfMonth(date);
 
-      if (option.day + 1 !== daysRemain) return false;
+      if (option.day < 0 && Math.abs(option.day + 1) !== daysRemain)
+        return false;
 
       const thatDay = perfectDate(
         option.start.getFullYear(),
