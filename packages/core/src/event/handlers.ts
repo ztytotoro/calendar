@@ -9,7 +9,7 @@ import {
   getWeekDay,
   isDefined,
   isNthWeekDay,
-  normalDate,
+  perfectDate,
   theNthWeekDay,
   toPositiveInt,
   WeekDays,
@@ -89,11 +89,12 @@ export function setupHandlers() {
 
       if (option.day + 1 !== daysRemain) return false;
 
-      const thatDay = normalDate(
+      const thatDay = perfectDate(
         option.start.getFullYear(),
         option.month,
         option.day
       );
+
       const { year, month } = diffTime(thatDay, eraseTime(date));
       if (month !== 0) return false;
       if (

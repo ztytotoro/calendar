@@ -51,7 +51,7 @@ export function normalDate(year: number, month: number, day: number = 1) {
   return new Date(year, month - 1, day);
 }
 
-export function date(year: number, month: number, day: number = 1) {
+export function perfectDate(year: number, month: number, day: number = 1) {
   if (day > 0) {
     return normalDate(year, month, day);
   }
