@@ -1,6 +1,7 @@
 import {
   daysBetween,
   daysOfMonth,
+  daysRemainOfMonth,
   diffTime,
   eraseTime,
   extract,
@@ -83,27 +84,32 @@ export function setupHandlers() {
     });
 
     registerHandler(RepeatTypes.MonthDay, (date, option) => {
-        const thatDay = normalDate(
-            option.start.getFullYear(),
-            option.month,
-            option.day
-        );
-        const { year, month, day } = diffTime(thatDay, eraseTime(date));
-        if (month !== 0 || day !== 0) return false;
-        if (
-            isDefined(option.interval) &&
-            (year - (thatDay < eraseTime(option.start) ? 1 : 0)) %
-                option.interval !==
-                0
-        )
-            return false;
-        if (
-            isDefined(option.times) &&
-            year + (thatDay < eraseTime(option.start) ? 0 : 1) >
-                getDefault(option.interval, 1) * option.times
-        )
-            return false;
-        return true;
+      // support days counting from end of month:
+      const daysRemain = daysRemainOfMonth(date);
+
+      if (option.day + 1 !== daysRemain) return false;
+
+      const thatDay = normalDate(
+        option.start.getFullYear(),
+        option.month,
+        option.day
+      );
+      const { year, month } = diffTime(thatDay, eraseTime(date));
+      if (month !== 0) return false;
+      if (
+        isDefined(option.interval) &&
+        (year - (thatDay < eraseTime(option.start) ? 1 : 0)) %
+          option.interval !==
+          0
+      )
+        return false;
+      if (
+        isDefined(option.times) &&
+        year + (thatDay < eraseTime(option.start) ? 0 : 1) >
+          getDefault(option.interval, 1) * option.times
+      )
+        return false;
+      return true;
     });
 
     registerHandler(RepeatTypes.NthWeekDayOfIntervalMonth, (date, option) => {

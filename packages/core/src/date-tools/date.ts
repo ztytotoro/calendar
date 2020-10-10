@@ -1,4 +1,5 @@
 import { WeekDay } from './definition';
+import { daysOfMonth } from './month';
 
 export function isWorkDay(date: Date) {
   const day = date.getDay();
@@ -50,6 +51,15 @@ export function normalDate(year: number, month: number, day: number = 1) {
   return new Date(year, month - 1, day);
 }
 
+export function date(year: number, month: number, day: number = 1) {
+  if (day > 0) {
+    return normalDate(year, month, day);
+  }
+  const maxDay = daysOfMonth(year, month);
+  if (day === 0) day = -1;
+  return normalDate(year, month, day + maxDay + 1);
+}
+
 export function dayOfYear(date: Date) {
   const firstDay = normalDate(date.getFullYear(), 1, 1);
 
@@ -70,4 +80,10 @@ export function addWeekDays(day: WeekDay, count: number) {
 
 export function now() {
   return new Date();
+}
+
+export function daysRemainOfMonth(date: Date) {
+  const { year, month, day } = extract(date);
+  const days = daysOfMonth(year, month);
+  return days - day;
 }
